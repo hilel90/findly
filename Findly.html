@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search.com</title>
+    <link rel="stylesheet" type="text/css" href="css54.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        /* סגנון חלונית היסטוריית החיפושים */
+        #historyPanel {
+            position: fixed; /* מיקום קבוע על המסך */
+            right: -300px; /* מחוץ למסך בברירת מחדל */
+            top: 0;
+            width: 300px; /* רוחב החלונית */
+            height: 100%; /* גובה מלא */
+            background-color: #f9f9f9; /* צבע רקע */
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); /* צל */
+            transition: right 0.3s; /* אנימציה חלקה כשפותחים את החלונית */
+            padding: 20px; /* ריפוד פנימי */
+            z-index: 1000; /* מעל שאר התוכן */
+        }
+        /* סגנון לכפתור היסטוריית החיפושים */
+        #searchHistoryBtn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        /* סגנון לכפתור החיפוש */
+        #searchBtn {
+            background-color: #4CAF50; /* צבע רקע ירוק */
+            color: white; /* צבע טקסט לבן */
+            border: none; /* בלי מסגרת */
+            padding: 10px 20px; /* ריפוד */
+            cursor: pointer; /* מצביע יד על הכפתור */
+            font-size: 16px; /* גודל טקסט */
+        }
+        #searchBtn:hover {
+            background-color: #45a049; /* שינוי צבע רקע בעת ריחוף */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Search.com</h1>
+        <div class="searchBox">
+            <input type="text" id="search" autocomplete="off" placeholder="Search...">
+            <button id="searchBtn">Search</button> <!-- כפתור חיפוש עם טקסט -->
+            <button id="searchHistoryBtn">Search History</button> <!-- כפתור היסטוריית החיפושים -->
+        </div>
+        <div class="categories">
+            <span id="allCategory" class="category active">All</span>
+            <span id="picturesCategory" class="category">Images</span>
+        </div>
+    </header>
+    <div id="resultsContainer"></div>
+    <div id="historyPanel">
+        <h2>Search History</h2>
+        <div id="historyContent"></div>
+        <button id="closeHistoryBtn">Close</button> <!-- כפתור סגירה לחלונית -->
+    </div>
+
+    <script src="code54.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            let searchHistory = []; // היסטוריית חיפושים
+
+            // Function to show search history
+            function showSearchHistory() {
+                $("#historyContent").empty(); // ניקוי תוכן קודם
+                if (searchHistory.length === 0) {
+                    $("#historyContent").append('<p>No search history available.</p>');
+                } else {
+                    searchHistory.forEach(query => {
+                        $("#historyContent").append(`<p>${query}</p>`);
+                    });
+                }
+                $("#historyPanel").css("right", "0"); // הצגת החלונית
+            }
+
+            // Function to close the history panel
+            function closeHistoryPanel() {
+                $("#historyPanel").css("right", "-300px"); // החזרת החלונית מחוץ למסך
+            }
+
+            // Search button click event
+            $("#searchBtn").click(function () {
+                const query = $("#search").val().trim();
+                $("#resultsContainer").empty(); // ניקוי תוצאות קודמות
+                searchHistory.push(query); // הוספת השאילתה להיסטוריה
+                // כאן תוכל להוסיף את קריאות הפונקציות שלך לחיפוש
+            });
+
+            // Search history button click event
+            $("#searchHistoryBtn").click(function () {
+                showSearchHistory();
+            });
+
+            // Close history button click event
+            $("#closeHistoryBtn").click(function () {
+                closeHistoryPanel();
+            });
+        });
+    </script>
+</body>
+</html>
